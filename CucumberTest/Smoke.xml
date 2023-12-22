@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng/testng-1.0.dtd">
+
+<suite name="Test" parallel="tests" thread-count="1">
+
+
+        <parameter name="BROWSER" value="CHROME"/>
+        <parameter name="WAIT" value="30"/>
+
+    <test name="Sandbox">
+        <classes>
+            <class name="runners.SmokeTestNgRunner"></class>
+        </classes>
+    </test>
+
+</suite>

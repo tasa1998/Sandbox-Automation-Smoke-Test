@@ -1,0 +1,16 @@
+{
+  "webLocators": {
+    "partnerNumberSandbox": {
+      "xpath": "//div[contains(text(),'PARTNER NUMBER')]/../../../..//input"
+    },
+    "usernameSandbox": {
+      "xpath": "//div[contains(text(),'USERNAME')]/../../../..//input"
+    },
+    "passwordSandbox": {
+      "xpath": "//div[contains(text(),'PASSWORD')]/../../../..//input"
+    },
+    "loginButtonSandbox": {
+      "xpath": "//span[contains(text(),'login')]"
+    }
+  }
+}
