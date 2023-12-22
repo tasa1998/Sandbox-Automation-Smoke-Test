@@ -1,4 +1,4 @@
-package pages.CommonPages;
+package pages.Common;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -28,7 +28,15 @@ public class Login extends BasePage {
     @FindBy(xpath = "//span[contains(text(),'login')]")
     WebElement loginBtn;
 
-    public void login(){
+    public void loginAsAgencyProducer(){
+        typeText(partnerNumber, "190135300", "Partner Number Field");
+        typeText(username, "KatarinaGigic", "Username Field");
+        typeText(password, "Kototamopeva12345$", "Password Field");
+        clickElement(loginBtn, "Login Button");
+        Assert.assertEquals(driver.findElement(By.xpath("//div[@id='os-title-bar-greet']")).getText(),"Welcome");
+    }
+
+    public void loginAsSeniorUW(){
         typeText(partnerNumber, "0", "Partner Number Field");
         typeText(username, "nastasjadamjanac", "Username Field");
         typeText(password, "Oneshield123", "Password Field");

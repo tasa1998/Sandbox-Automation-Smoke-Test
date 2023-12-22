@@ -11,14 +11,14 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.Reporter;
-import pages.AutoPages.*;
+import pages.Auto.*;
 import pages.CommonUtility;
-import pages.CommonPages.Login;
-import pages.CommonPages.NewQuoteCreation;
-import pages.CommonPages.QuoteRegistration;
-import pages.HomePages.EndOfQuoteCreation;
-import pages.HomePages.LocationCoverage;
-import pages.HomePages.PolicyInformation;
+import pages.Common.Login;
+import pages.Common.NewQuoteCreation;
+import pages.Common.QuoteRegistration;
+import pages.Home.EndOfQuoteCreation;
+import pages.Home.LocationCoverage;
+import pages.Home.PolicyInformation;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -69,7 +69,7 @@ public class Steps extends BaseSteps {
 
     @Then("user logs in")
     public void userLogsIn() {
-        new Login(driver).login();
+        new Login(driver).loginAsSeniorUW();
     }
 
     @Given("load data from excel file {string}, {string},{string},{string}")

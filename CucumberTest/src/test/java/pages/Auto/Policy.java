@@ -1,4 +1,4 @@
-package pages.AutoPages;
+package pages.Auto;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
