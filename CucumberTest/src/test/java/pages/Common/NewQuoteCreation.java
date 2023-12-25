@@ -13,12 +13,6 @@ public class NewQuoteCreation extends BasePage {
     @FindBy(xpath = "//span[contains(text(),'new quote')]")
     WebElement newQuote;
 
-    @FindBy(xpath = "//span[contains(text(),'Sherrie Insurance Co')]/../../..//span")
-    WebElement agent;
-
-    @FindBy(xpath = "//span[text()='>>> next']")
-    WebElement createNewQuote;
-
     @FindBy(xpath = "//div[text()='First Name']/../../../..//input")
     WebElement firstNameField;
 
@@ -48,10 +42,10 @@ public class NewQuoteCreation extends BasePage {
     @FindBy(xpath = "//span[text()='>>> Create A New Customer']/../../..")
     WebElement createNewCustomer;
 
-    @FindBy(xpath = "//span[text()='   >>> next']/../../..")
+    @FindBy(xpath = "//span[text()='   >>> next']")
     WebElement nextBtn;
 
-    @FindBy(xpath = "//span[text()='>>> skip']/../../..")
+    @FindBy(xpath = "//span[text()='>>> skip']")
     WebElement skipBtn;
 
     public NewQuoteCreation(WebDriver driver) {
@@ -62,8 +56,6 @@ public class NewQuoteCreation extends BasePage {
 
     public void createNewQuote() {
         clickElement(newQuote, "New Quote");
-        clickElement(agent, "Agency Name");
-        clickElement(createNewQuote, "Create Quote");
     }
 
     public void enterFirstname(String firstName1) {
@@ -94,15 +86,6 @@ public class NewQuoteCreation extends BasePage {
         typeText(zipCodeField, zipCode1, "Zip Code Field");
     }
 
-    public void CreateNewCustomer() throws InterruptedException {
-        clickElement(search, "Search");
-        Thread.sleep(3000);
-        clickElement(createNewCustomer, "Create New Customer");
-        Thread.sleep(3000);
-        clickElement(createNewCustomer, "Create New Customer");
-        clickElement(nextBtn, "Next Button");
-        clickElement(skipBtn, "Skip Button");
-    }
 
     public void enterCustomerInformation(String firstName, String lastName, String DOB, String email, String phone, String address, String zip) throws InterruptedException {
         createNewQuote();
@@ -113,7 +96,10 @@ public class NewQuoteCreation extends BasePage {
         enterPhone(phone);
         enterAddress(address);
         enterZipCode(zip);
-        CreateNewCustomer();
+        clickElement(nextBtn, "Next Button");
+        Thread.sleep(3000);
+        clickElement(nextBtn, "Next Button");
+        clickElement(skipBtn, "Skip Button");
     }
 
 

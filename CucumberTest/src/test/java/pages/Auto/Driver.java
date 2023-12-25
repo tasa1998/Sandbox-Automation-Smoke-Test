@@ -19,6 +19,9 @@ public class Driver extends BasePage {
     @FindBy(xpath = "//div[text()='License Status']/../../../..//input")
     WebElement licenseStatusSelect;
 
+    @FindBy(xpath = "//div[text()='License State/Province']/../../../..//input")
+    WebElement licenseStateProvinceSelect;
+
     @FindBy(xpath = "//div[text()='Occupation']/../../../..//input")
     WebElement occupationSelect;
 
@@ -56,47 +59,53 @@ public class Driver extends BasePage {
         clickElement(driver.findElement(By.xpath("//li[text()='" + value + "']")), "Marital Status");
     }
 
-    public void fillInCertificateCheckbox(String certificate){
-       clickElement(driver.findElement(By.xpath("//div[text()='SR-22/ Certificate of Insurance Required?']/../../../..//label[text()='" + certificate + "']")), "Certificate Required");
+    public void fillInCertificateCheckbox(String certificate) {
+        clickElement(driver.findElement(By.xpath("//div[text()='SR-22/ Certificate of Insurance Required?']/../../../..//label[text()='" + certificate + "']")), "Certificate Required");
     }
 
     public void selectLicenseStatus(String value) {
         clickElement(licenseStatusSelect, "License Status dropdown");
         clickElement(driver.findElement(By.xpath("//li[text()='" + value + "']")), "License Status");
+
     }
+
+    public void selectLicenseStateProvince(String value) {
+        clickElement(licenseStateProvinceSelect, "License State Province dropdown");
+        clickElement(driver.findElement(By.xpath("//li[text()='" + value + "']")), "License State Province");
+    }
+
     public void selectOccupation(String value) {
         clickElement(occupationSelect, "Occupation dropdown");
         clickElement(driver.findElement(By.xpath("//li[text()='" + value + "']")), "Occupation");
     }
 
-    public void enterLicenseYear(String value){
-        typeText(licenseYearField,value,"License Year");
-    }
-    public void enterLicenseNumber(String value){
-        typeText(licenseNumberField,value,"License Number");
+    public void enterLicenseYear(String value) {
+        typeText(licenseYearField, value, "License Year");
     }
 
-    public void enterIncident(String incidentdate){
+    public void enterLicenseNumber(String value) {
+        typeText(licenseNumberField, value, "License Number");
+    }
+
+    public void enterIncident(String incidentdate) {
         clickElement(addIncident, "Add Incident");
-        typeText(incidentDate,incidentdate,"Set Incident Date");
+        typeText(incidentDate, incidentdate, "Set Incident Date");
     }
 
     public void clickNextBtn() {
         clickElement(nextBtn, "next");
     }
 
-    public void fillInDriverPage(String gender, String maritalStatus, String certificate, String licenseStatus, String occupation, String licenseYear, String licenseNumber){
+    public void fillInDriverPage(String gender, String maritalStatus, String licenseStatus, String licenceStateProvince) throws InterruptedException {
         selectGender(gender);
         selectMaritalStatus(maritalStatus);
-        fillInCertificateCheckbox(certificate);
         selectLicenseStatus(licenseStatus);
-        selectOccupation(occupation);
-        enterLicenseYear(licenseYear);
-        enterLicenseNumber(licenseNumber);
+        Thread.sleep(2000);
+        selectLicenseStateProvince(licenceStateProvince);
         clickNextBtn();
     }
 
-    public void fillInDriverPageRegression(String gender, String maritalStatus, String certificate, String licenseStatus, String occupation, String licenseYear, String licenseNumber, String incidentdate){
+    public void fillInDriverPageRegression(String gender, String maritalStatus, String certificate, String licenseStatus, String occupation, String licenseYear, String licenseNumber, String incidentdate) {
         selectGender(gender);
         selectMaritalStatus(maritalStatus);
         fillInCertificateCheckbox(certificate);

@@ -11,8 +11,6 @@ public class QuoteRegistration extends BasePage {
 
     WebDriver driver;
 
-    @FindBy(xpath = "//div[text()='Producer']/../../../..//input")
-    WebElement producer;
     @FindBy(xpath = "//div[text()='Effective Date']/../../../..//input")
     WebElement effDate;
     @FindBy(xpath = "//div[text()='Program']/../../../..//input")
@@ -27,9 +25,7 @@ public class QuoteRegistration extends BasePage {
         PageFactory.initElements(driver, this);
     }
 
-    public void fillInQuoteRegistration(String producerName, String effDate1, String program1){
-        clickElement(producer,"Producer Dropdown");
-        clickElement(driver.findElement(By.xpath("//li[text()='"+producerName+"']")), "Producer Name");
+    public void fillInQuoteRegistration(String effDate1, String program1){
         typeText(effDate,effDate1,"Effective Date Field");
         clickElement(program,"Program Dropdown");
         clickElement(driver.findElement(By.xpath("//li[text()='"+program1+"']")), "Program Type");

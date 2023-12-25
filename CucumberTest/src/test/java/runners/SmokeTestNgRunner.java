@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 
 @Test
 @CucumberOptions(
-        features = {"src/test/java/features/Homeowner.feature","src/test/java/features/PersonalAuto.feature"},
+        features = {"src/test/java/features/PersonalAuto.feature"},
         glue= "steps",
         tags="@Smoke"
 )

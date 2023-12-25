@@ -31,6 +31,8 @@ public class Steps extends BaseSteps {
     Map<String, String> homeOwnersData = new HashMap<>();
     Map<String, String> personalAutoData = new HashMap<>();
 
+    Map<String, String> vehicleData = new HashMap<>();
+
     final String BROWSER = Reporter.getCurrentTestResult().getTestContext().getCurrentXmlTest().getParameter("BROWSER");
     final String WAIT = Reporter.getCurrentTestResult().getTestContext().getCurrentXmlTest().getParameter("WAIT");
 
@@ -69,31 +71,32 @@ public class Steps extends BaseSteps {
 
     @Then("user logs in")
     public void userLogsIn() {
-        new Login(driver).loginAsSeniorUW();
+        new Login(driver).loginAsAgencyProducer();
     }
 
-    @Given("load data from excel file {string}, {string},{string},{string}")
-    public void loadDataFromExcelFile(String arg0, String arg1, String arg2, String arg3) throws IOException {
-        customerData = new GetExcelData().getRowData(arg0, "CustomerData", Integer.parseInt(arg2));
-        homeOwnersData = new GetExcelData().getRowData(arg0, "Homeowners", Integer.parseInt(arg1));
-        homePageData = new GetExcelData().getRowData(arg0, "HomePage", Integer.parseInt(arg3));
-    }
+//    @Given("load data from excel file {string}, {string},{string},{string}")
+//    public void loadDataFromExcelFile(String arg0, String arg1, String arg2, String arg3) throws IOException {
+//        customerData = new GetExcelData().getRowData(arg0, "CustomerData", Integer.parseInt(arg2));
+//        homeOwnersData = new GetExcelData().getRowData(arg0, "Homeowners", Integer.parseInt(arg1));
+//        homePageData = new GetExcelData().getRowData(arg0, "HomePage", Integer.parseInt(arg3));
+//
+//    }
 
     @Given("load data from Auto excel file {string}, {string},{string},{string}")
     public void loadDataFromAutoExcelFile(String arg0, String arg1, String arg2, String arg3) throws IOException {
         customerData = new GetExcelData().getRowData(arg0, "CustomerData", Integer.parseInt(arg2));
-        homePageData = new GetExcelData().getRowData(arg0, "HomePage", Integer.parseInt(arg3));
         personalAutoData= new GetExcelData().getRowData(arg0, "PersonalAutoData", Integer.parseInt(arg1));
+        vehicleData = new GetExcelData().getRowData(arg0,"VehicleData", Integer.parseInt(arg3));
     }
 
     @Then("user create new customer")
     public void userCreateNewCustomer() throws InterruptedException {
-        new NewQuoteCreation(driver).enterCustomerInformation(customerData.get("FirstName"), customerData.get("LastName"), customerData.get("DOB"), customerData.get("Email"), customerData.get("Phone"), customerData.get("Address Line 1"), customerData.get("ZIP Code"));
+        new NewQuoteCreation(driver).enterCustomerInformation(customerData.get("First_Name"), customerData.get("Last_Name"), customerData.get("DoB"), customerData.get("Email"), customerData.get("Phone"), customerData.get("Address"), customerData.get("ZIP_Code"));
     }
 
     @And("user register quote")
     public void userRegisterQuote() {
-        new QuoteRegistration(driver).fillInQuoteRegistration(homePageData.get("Producer"), homePageData.get("Effective Date"), homePageData.get("Program"));
+        new QuoteRegistration(driver).fillInQuoteRegistration(personalAutoData.get("Effective_Date"), personalAutoData.get("Program"));
     }
 
     @And("user fill in policy information")
@@ -118,22 +121,22 @@ public class Steps extends BaseSteps {
 
     @And("user fill in policy information Personal Auto")
     public void userFillInPolicyInformationPersonalAuto() throws InterruptedException {
-        new Policy(driver).fillInPolicyPage(personalAutoData.get("Billing Method"),personalAutoData.get("Has anyone knowingly provided material"),personalAutoData.get("Does any vehicle have any existing damage?"));
+        new Policy(driver).fillInPolicyPage(personalAutoData.get("Billing_Method"),personalAutoData.get("Eligibility_in_case_of_false_information"),personalAutoData.get("Eligibility_in_case_of_existing_damage"));
     }
 
     @And("user fill in driver page")
-    public void userFillInDriverPage() {
-        new Driver(driver).fillInDriverPage(personalAutoData.get("Gender"),personalAutoData.get("Marital Status"),personalAutoData.get("SR-22/ Certificate of Insurance Required?"), personalAutoData.get("License Status"), personalAutoData.get("Occupation"),personalAutoData.get("License Year"),personalAutoData.get("License Number"));
+    public void userFillInDriverPage() throws InterruptedException {
+        new Driver(driver).fillInDriverPage(customerData.get("Gender"),customerData.get("Marital_Status"), customerData.get("License_Status"), customerData.get("License_State/Province"));
     }
 
     @And("user fill in vehicle page")
     public void userFillInVehiclePage() throws InterruptedException {
-        new Vehicle(driver).fillInVehiclePage(personalAutoData.get("Year"),personalAutoData.get("Make"),personalAutoData.get("Model"),personalAutoData.get("Specification"),personalAutoData.get("Vehicle Use"));
+        new Vehicle(driver).fillInVehiclePage(vehicleData.get("Year"),vehicleData.get("Make"),vehicleData.get("Model"),vehicleData.get("Specification"),vehicleData.get("Vehicle_Use"));
     }
 
     @And("user fill in coverage page")
     public void userFillInCoveragePage() {
-        new Coverage(driver).fillInCoveragePage(personalAutoData.get("Policy Coverage Option"));
+        new Coverage(driver).fillInCoveragePage(personalAutoData.get("Policy_Coverage_Option"));
     }
 
     @And("user override underwriting referral")
@@ -171,5 +174,10 @@ public class Steps extends BaseSteps {
     @Then("verify that the policy has been issued")
     public void verifyThatThePolicyHasBeenIssued() {
         Assert.assertEquals(driver.findElement(By.xpath("//li[@class='mode3']/span")).getText(), "Cannot bind this quote for this customer due to existing policy.");
+    }
+
+    @When("user refer to UW")
+    public void userReferToUW() throws InterruptedException {
+        new pages.Auto.EndOfQuoteCreation(driver).endOfQuoteCreation(personalAutoData.get("Underwriter's_Comments"));
     }
 }

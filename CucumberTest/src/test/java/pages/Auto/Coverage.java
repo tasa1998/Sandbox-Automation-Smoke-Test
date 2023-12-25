@@ -12,6 +12,9 @@ public class Coverage extends BasePage {
     @FindBy(xpath = "//div[text()='Policy Coverage Option']/../../../..//input")
     WebElement policyCoverageOptionSelect;
 
+    @FindBy(xpath = "//span[text()='next']")
+    WebElement nextBtn;
+
     @FindBy(xpath = "//span[text()='>>> rate quote']")
     WebElement rateBtn;
 
@@ -27,12 +30,12 @@ public class Coverage extends BasePage {
         clickElement(driver.findElement(By.xpath("//li[text()='" + value + "']")), "Policy Coverage Option");
     }
 
-    public void clickRateBtn(){
-        clickElement(rateBtn, "rate");
+    public void clickNext(){
+        clickElement(nextBtn, "next");
     }
 
     public void fillInCoveragePage(String policyCoverageOption){
         selectPolicyCoverageOption(policyCoverageOption);
-        clickRateBtn();
+        clickNext();
     }
 }

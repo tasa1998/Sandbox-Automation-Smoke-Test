@@ -34,11 +34,13 @@ public class Policy extends BasePage {
         clickElement(driver.findElement(By.xpath("//div[text()='Has anyone knowingly provided material, false, or misleading information ']/../../../..//label[text()='" + providedMaterial + "']/../span")), "Provided Material");
         Thread.sleep(2000);
         clickElement(driver.findElement(By.xpath("//div[text()='Does any vehicle have any existing damage? (excluding glass damage)']/../../../..//label[text()='" + existingDamage + "']/../span")), "Existing Damage");
+        Thread.sleep(2000);
+        clickElement(driver.findElement(By.xpath("//div[text()='Does any vehicle have any existing damage? (excluding glass damage)']/../../../..//label[text()='" + existingDamage + "']/../span")), "Existing Damage");
     }
 
     public void clickNextBtn(){
         clickElement(nextBtn, "Next");
-    }
+}
 
     public void fillInPolicyPage(String method,String providedMaterial, String existingDamage) throws InterruptedException {
         billingMethod(method);
