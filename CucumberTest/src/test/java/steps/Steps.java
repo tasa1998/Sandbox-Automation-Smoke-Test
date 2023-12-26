@@ -30,8 +30,8 @@ public class Steps extends BaseSteps {
     Map<String, String> homePageData = new HashMap<>();
     Map<String, String> homeOwnersData = new HashMap<>();
     Map<String, String> personalAutoData = new HashMap<>();
-
     Map<String, String> vehicleData = new HashMap<>();
+    String quoteNumber;
 
     final String BROWSER = Reporter.getCurrentTestResult().getTestContext().getCurrentXmlTest().getParameter("BROWSER");
     final String WAIT = Reporter.getCurrentTestResult().getTestContext().getCurrentXmlTest().getParameter("WAIT");
@@ -126,7 +126,7 @@ public class Steps extends BaseSteps {
 
     @And("user fill in driver page")
     public void userFillInDriverPage() throws InterruptedException {
-        new Driver(driver).fillInDriverPage(customerData.get("Gender"),customerData.get("Marital_Status"), customerData.get("License_Status"), customerData.get("License_State/Province"));
+        new Driver(driver).fillInDriverPage(customerData.get("Gender"),customerData.get("Marital_Status"), customerData.get("License_Status"), personalAutoData.get("License_State/Province"));
     }
 
     @And("user fill in vehicle page")
@@ -147,7 +147,6 @@ public class Steps extends BaseSteps {
     @And("user fill in wind mitigation")
     public void userFillInWindMitigation() {
         new LocationCoverage(driver).fillInLocationCoverageRegression(homeOwnersData.get("Residence Type"), homeOwnersData.get("Replacement Cost"), homeOwnersData.get("Policy Coverage Option"), homeOwnersData.get("All Perils Deductible"), homeOwnersData.get("Windstorm or Hail Deductible"), homeOwnersData.get("Liability"), homeOwnersData.get("Medical Payments"), homeOwnersData.get("Year Built"), homeOwnersData.get("Roof Type"), homeOwnersData.get("Construction Type"), homeOwnersData.get("Any losses in the last three years?"), homeOwnersData.get("# of Floors"),homeOwnersData.get("Roof Shape"),homeOwnersData.get("Secondary Water Resistance"),homeOwnersData.get("Opening Protection"),homeOwnersData.get("Roof Deck"),homeOwnersData.get("Distance to Shore"),homeOwnersData.get("Roof Deck Attachment"),homeOwnersData.get("Roof Wall Connection"));
-
     }
 
     @And("user fill in driver page with incidents")
@@ -178,6 +177,15 @@ public class Steps extends BaseSteps {
 
     @When("user refer to UW")
     public void userReferToUW() throws InterruptedException {
-        new pages.Auto.EndOfQuoteCreation(driver).endOfQuoteCreation(personalAutoData.get("Underwriter's_Comments"));
+        quoteNumber = new pages.Auto.EndOfQuoteCreation(driver).endOfQuoteCreation(personalAutoData.get("Underwriter's_Comments"));
+    }
+
+    @Then("user logs in as Senior UW")
+    public void userLogsInAsSeniorUW() {
+        new Login(driver).loginAsSeniorUW();
+    }
+
+    @And("user search for quote")
+    public void userSearchForPolicy() {
     }
 }

@@ -17,9 +17,10 @@ Feature: Creation and issuance of Personal Auto policies
     And user fill in driver page
     And user fill in vehicle page
     And user fill in coverage page
-#   Then verify that the appropriate referral is displayed
     When user refer to UW
-    Then verify that the policy has been issued
+
+    Then user logs in as Senior UW
+    And user search for quote
 
 
     Examples:

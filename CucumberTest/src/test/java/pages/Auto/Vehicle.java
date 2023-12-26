@@ -92,9 +92,13 @@ public class Vehicle extends BasePage {
 
     public void fillInVehiclePage(String year, String make, String model, String specification, String vehicleUse) throws InterruptedException {
         selectYear(year);
+        Thread.sleep(1000);
         selectMake(make);
+        Thread.sleep(1000);
         selectModel(model);
+        Thread.sleep(1000);
         selectSpecification(specification);
+        Thread.sleep(1000);
         selectVehicleUse(vehicleUse);
         clickNextBtn();
         clickNextBtn();
