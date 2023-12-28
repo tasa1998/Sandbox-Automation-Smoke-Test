@@ -90,7 +90,6 @@ public class Endorsement extends BasePage implements ITransactions {
 
     @Override
     public void startTransaction() {
-
     }
 
     @Override
