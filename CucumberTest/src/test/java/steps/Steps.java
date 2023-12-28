@@ -19,6 +19,7 @@ import pages.Common.QuoteRegistration;
 import pages.Home.EndOfQuoteCreation;
 import pages.Home.LocationCoverage;
 import pages.Home.PolicyInformation;
+import pages.Transactions.Endorsement;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -31,6 +32,8 @@ public class Steps extends BaseSteps {
     Map<String, String> homeOwnersData = new HashMap<>();
     Map<String, String> personalAutoData = new HashMap<>();
     Map<String, String> vehicleData = new HashMap<>();
+    Map<String, String> vehicleToAddData = new HashMap<>();
+    Map<String, String> endorsementData = new HashMap<>();
     String quoteNumber;
 
     final String BROWSER = Reporter.getCurrentTestResult().getTestContext().getCurrentXmlTest().getParameter("BROWSER");
@@ -187,5 +190,21 @@ public class Steps extends BaseSteps {
 
     @And("user search for quote")
     public void userSearchForPolicy() {
+    }
+
+
+    @When("user create an Endorsement {string},{string}")
+    public void userCreateAnEndorsement(String arg0, String arg1) throws IOException {
+        endorsementData = new GetExcelData().getRowData(arg0,"EndorsementData", Integer.parseInt(arg1));
+        new Endorsement(driver).startEndorsement(endorsementData.get("Type"), endorsementData.get("Sub_Type"), endorsementData.get("Reason"),endorsementData.get("Effective_Date"),endorsementData.get("Description"));
+    }
+    @And("user add vehicle on Endorsement {string}, {string}")
+    public void userAddVehicleOnEndorsement(String arg0, String arg1) throws IOException {
+        vehicleToAddData = new GetExcelData().getRowData(arg0,"VehicleData", Integer.parseInt(arg1));
+        new Endorsement(driver).bodyOfTheEndorsement(vehicleToAddData.get("Year"),vehicleToAddData.get("Make"),vehicleToAddData.get("Model"),vehicleToAddData.get("Specification"),vehicleToAddData.get("Vehicle_Use"),vehicleToAddData.get("Ownership"));
+    }
+    @Then("user process and Endorsement")
+    public void userProcessAndEndorsement() {
+        new Endorsement(driver).endEndorsement();
     }
 }

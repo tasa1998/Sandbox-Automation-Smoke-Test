@@ -1,14 +1,16 @@
 package pages.Transactions;
 
-import Interfaces.ITransactions;
+
+import Interfaces.IReinstatement;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import pages.BasePage;
 
-public class Reinstatement extends BasePage {
+public class Reinstatement extends BasePage implements IReinstatement {
 
+    WebDriver driver;
     @FindBy(xpath = "//span[text()='transactions']")
     WebElement transactions;
 
@@ -48,30 +50,24 @@ public class Reinstatement extends BasePage {
         PageFactory.initElements(driver, this);
     }
 
-    @Override
-    public void startTransaction() {
-    }
 
     @Override
-    public void bodyOfTheTransaction() {
-    }
-
-    @Override
-    public void endTransaction() {
-    }
-
-    public void reinstate(String transactionType, String transactionEffectiveDate, String transactionDescription, String reinstatementClaims, String reinstatementReason) {
+    public void startReinstatement(String transactionType, String transactionEffectiveDate, String transactionDescription) {
         clickElement(transactions, "Transactions");
         clickElement(newTransaction, "New Transaction");
         typeText(type, transactionType, "Transaction Type");
         typeText(date, transactionEffectiveDate, "Effective Date");
         typeText(description, transactionDescription, "Transaction Description");
         clickElement(next, "Next");
+    }
+
+    @Override
+    public void processReinstatement(String reinstatementClaims, String reinstatementReason) {
         typeText(claims, reinstatementClaims, "Reinstatement Method");
         typeText(reason, reinstatementReason, "Reinstatement Reason");
         clickElement(next, "Next");
         clickElement(process, "Process");
         clickElement(ok, "OK");
         clickElement(exit, "Exit");
-}
+    }
 }

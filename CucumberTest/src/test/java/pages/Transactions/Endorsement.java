@@ -1,6 +1,6 @@
 package pages.Transactions;
 
-import Interfaces.ITransactions;
+import Interfaces.IEndorsement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,7 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import pages.BasePage;
 
-public class Endorsement extends BasePage implements ITransactions {
+public class Endorsement extends BasePage implements IEndorsement {
 
     WebDriver driver;
 
@@ -89,49 +89,7 @@ public class Endorsement extends BasePage implements ITransactions {
     }
 
     @Override
-    public void startTransaction() {
-    }
-
-    @Override
-    public void bodyOfTheTransaction() {
-          }
-
-    @Override
-    public void endTransaction() {
-
-    }
-
-    public void body(String yearvalue, String makevalue, String modelvalue, String specificationvalue, String usagevalue, String ownershipvalue) {
-        clickElement(nextnode, "Next Node");
-        clickElement(nextnode, "Next Node");
-        clickElement(addVehicle, "Add Vehicle");
-        clickElement(year, "Year dropdown");
-        clickElement(driver.findElement(By.xpath("//li[text()='" + yearvalue + "']")), "Year");
-        clickElement(make, "Make dropdown");
-        clickElement(driver.findElement(By.xpath("//li[text()='" + makevalue + "']")), "Make");
-        clickElement(model, "Model dropdown");
-        clickElement(driver.findElement(By.xpath("//li[text()='" + modelvalue + "']")), "Model");
-        clickElement(specification, "Specification dropdown");
-        clickElement(driver.findElement(By.xpath("//li[text()='" + specificationvalue + "']")), "Specification");
-        clickElement(use, "VehicleUse dropdown");
-        clickElement(driver.findElement(By.xpath("//li[text()='" + usagevalue + "']")), "VehicleUse");
-        clickElement(ownership, "Ownership dropdown");
-        clickElement(driver.findElement(By.xpath("//li[text()='" + ownershipvalue + "']")), "Ownership");
-        clickElement(nextnode, "Next Node");
-    }
-
-    public void end() {
-        clickElement(save, "Save Changes");
-        clickElement(changeSummary, "Change Summary");
-        clickElement(premiumImpact, "Premium Impact");
-        clickElement(next, "Next");
-        clickElement(next, "Next");
-        clickElement(process, "Process");
-        clickElement(ok, "OK");
-        clickElement(exit, "Exit");
-    }
-
-    public void start(String transactionType, String transactionSubtype, String transactionReason, String transactionEffectiveDate, String transactionDescription) {
+    public void startEndorsement(String transactionType, String transactionSubtype, String transactionReason, String transactionEffectiveDate, String transactionDescription) {
         clickElement(transactions, "Transactions");
         clickElement(newTransaction, "New Transaction");
         typeText(type, transactionType, "Transaction Type");
@@ -140,5 +98,38 @@ public class Endorsement extends BasePage implements ITransactions {
         typeText(date, transactionEffectiveDate, "Effective Date");
         typeText(description, transactionDescription, "Transaction Description");
         clickElement(next, "Next");
+    }
+
+
+    @Override
+    public void bodyOfTheEndorsement(String yearValue, String makeValue, String modelValue, String specificationValue, String usageValue, String ownershipValue) {
+        clickElement(nextnode, "Next Node");
+        clickElement(nextnode, "Next Node");
+        clickElement(addVehicle, "Add Vehicle");
+        clickElement(year, "Year dropdown");
+        clickElement(driver.findElement(By.xpath("//li[text()='" + yearValue + "']")), "Year");
+        clickElement(make, "Make dropdown");
+        clickElement(driver.findElement(By.xpath("//li[text()='" + makeValue + "']")), "Make");
+        clickElement(model, "Model dropdown");
+        clickElement(driver.findElement(By.xpath("//li[text()='" + modelValue + "']")), "Model");
+        clickElement(specification, "Specification dropdown");
+        clickElement(driver.findElement(By.xpath("//li[text()='" + specificationValue + "']")), "Specification");
+        clickElement(use, "VehicleUse dropdown");
+        clickElement(driver.findElement(By.xpath("//li[text()='" + usageValue + "']")), "VehicleUse");
+        clickElement(ownership, "Ownership dropdown");
+        clickElement(driver.findElement(By.xpath("//li[text()='" + ownershipValue + "']")), "Ownership");
+        clickElement(nextnode, "Next Node");
+    }
+
+    @Override
+    public void endEndorsement() {
+        clickElement(save, "Save Changes");
+        clickElement(changeSummary, "Change Summary");
+        clickElement(premiumImpact, "Premium Impact");
+        clickElement(next, "Next");
+        clickElement(next, "Next");
+        clickElement(process, "Process");
+        clickElement(ok, "OK");
+        clickElement(exit, "Exit");
     }
 }

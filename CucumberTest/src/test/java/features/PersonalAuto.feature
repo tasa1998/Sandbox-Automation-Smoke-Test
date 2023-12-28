@@ -22,7 +22,11 @@ Feature: Creation and issuance of Personal Auto policies
     Then user logs in as Senior UW
     And user search for quote
 
+    When user create an Endorsement "<File Name>","<Endorsement Data Num>"
+    And user add vehicle on Endorsement "<File Name>", "<Vehicle To Add Row Num>"
+    Then user process and Endorsement
+
 
     Examples:
-      | File Name                  | Row Num Personal Auto | Row Num Customer | Row Num Vehicle |
-      | src/TestData/TestData.xlsx | 0                     | 0                | 0               |
+      | File Name                  | Row Num Personal Auto | Row Num Customer | Row Num Vehicle | Vehicle To Add Row Num |Endorsement Data Num|
+      | src/TestData/TestData.xlsx | 0                     | 0                | 0               | 1                      |0                   |

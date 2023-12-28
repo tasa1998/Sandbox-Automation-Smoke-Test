@@ -1,20 +1,7 @@
 package pages.Transactions;
 
-import Interfaces.ITransactions;
+import Interfaces.IEndorsement;
 
-public class Renewal implements ITransactions {
-    @Override
-    public void startTransaction() {
+public class Renewal {
 
-    }
-
-    @Override
-    public void bodyOfTheTransaction() {
-
-    }
-
-    @Override
-    public void endTransaction() {
-
-    }
 }
