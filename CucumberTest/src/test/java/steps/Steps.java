@@ -72,10 +72,6 @@ public class Steps extends BaseSteps {
         driver.findElement(By.xpath(CommonUtility.getWebLocator("webLocators." + arg1 + ".xpath", jsonFilePath))).sendKeys(arg0);
     }
 
-    @Then("user logs in")
-    public void userLogsIn() {
-        new Login(driver).loginAsAgencyProducer();
-    }
 
 //    @Given("load data from excel file {string}, {string},{string},{string}")
 //    public void loadDataFromExcelFile(String arg0, String arg1, String arg2, String arg3) throws IOException {
@@ -118,8 +114,7 @@ public class Steps extends BaseSteps {
 
     @And("user binds quote")
     public void userBindsQuote() throws InterruptedException, IOException {
-        new EndOfQuoteCreation(driver).bindQuote(homeOwnersData.get("Existing Agency Client?"), homeOwnersData.get("Has any company cancelled or refused to insure in the past 3 years?"), homeOwnersData.get("Has coverage been non-renewed or Declined?"));
-
+        new BindQuote(driver).bindQuote(quoteNumber, customerData.get("SR-22/Certificate_of_Insurance_Required?"), customerData.get("Occupation"),vehicleData.get("Ownership"));
     }
 
     @And("user fill in policy information Personal Auto")
@@ -189,9 +184,14 @@ public class Steps extends BaseSteps {
     }
 
     @And("user search for quote")
-    public void userSearchForPolicy() {
+    public void userSearchForQuote() {
+        new ApproveReferrals(driver).selectCreatedQuote(quoteNumber);
     }
 
+    @And("user approve referrals")
+    public void userApproveReferrals() throws InterruptedException {
+        new ApproveReferrals(driver).approveReferrals();
+    }
 
     @When("user create an Endorsement {string},{string}")
     public void userCreateAnEndorsement(String arg0, String arg1) throws IOException {
@@ -206,5 +206,10 @@ public class Steps extends BaseSteps {
     @Then("user process and Endorsement")
     public void userProcessAndEndorsement() {
         new Endorsement(driver).endEndorsement();
+    }
+
+    @And("user logs in as Agency Producer")
+    public void userLogsInAsAgencyProducer() {
+        new Login(driver).loginAsAgencyProducer();
     }
 }

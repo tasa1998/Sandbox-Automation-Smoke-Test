@@ -1,5 +1,6 @@
 package pages.Auto;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -36,5 +37,34 @@ public class ApproveReferrals extends BasePage {
         super(driver);
         this.driver = driver;
         PageFactory.initElements(driver, this);
+    }
+
+    public void selectCreatedQuote(String quoteNumberText){
+        clickElement(quotesBtn,"Quotes");
+        clickElement(driver.findElement(By.xpath("//div[text()='"+quoteNumberText+"']/../following-sibling::td/div/span")), "Quote Number");
+    }
+
+    public void approveReferrals() throws InterruptedException {
+        clickElement(reviewUWIssuesBtn, "review UW issues");
+        typeText(uwCommentsField,"Verified and Approved", "Verified and Approved");
+        clickElement(overriddenSelect, "Override");
+        clickElement(driver.findElement(By.xpath("//li[text()='Yes']")), "overridden");
+        clickElement(acceptBtn, "Accept");
+        Thread.sleep(1000);
+        clickElement(okButton, "OK");
+        Thread.sleep(1000);
+        clickElement(nextBtn,"Next");
+        Thread.sleep(1000);
+        clickElement(emailCheckbox, "Email checkbox");
+        Thread.sleep(1000);
+        clickElement(nextBtn,"Next");
+        Thread.sleep(1000);
+        clickElement(acceptBtn, "Accept");
+        Thread.sleep(1000);
+        clickElement(exitBtn, "Exit");
+        Thread.sleep(1000);
+        clickElement(homeTab, "Home tab");
+        Thread.sleep(1000);
+        clickElement(logoutBtn, "Logout");
     }
 }
