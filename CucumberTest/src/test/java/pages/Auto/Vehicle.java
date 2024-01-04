@@ -90,7 +90,7 @@ public class Vehicle extends BasePage {
         typeText(statedAmount, statedamount, "Stated Amount");
            }
 
-    public void fillInVehiclePage(String year, String make, String model, String specification, String vehicleUse) throws InterruptedException {
+    public void fillInVehiclePage(String year, String make, String model, String specification, String vehicleUse, String ownership) throws InterruptedException {
         selectYear(year);
         Thread.sleep(1000);
         selectMake(make);
@@ -100,6 +100,8 @@ public class Vehicle extends BasePage {
         selectSpecification(specification);
         Thread.sleep(1000);
         selectVehicleUse(vehicleUse);
+        Thread.sleep(1000);
+        selectOwnership(ownership);
         clickNextBtn();
         clickNextBtn();
     }

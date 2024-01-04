@@ -34,15 +34,13 @@ public class BindQuote extends BasePage {
     WebElement next;
     @FindBy(xpath = "//span[text()='>>> bind']")
     WebElement bindBtn;
-    @FindBy(xpath = "//span[contains(text(), 'logout')]")
-    WebElement logoutBtn;
     public BindQuote(WebDriver driver) {
         super(driver);
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 
-    public void bindQuote(String quoteNumber, String certificateOfInsurance, String occupation, String ownership) throws InterruptedException {
+    public String bindQuote(String quoteNumber) throws InterruptedException {
         clickElement(quotesPage, "Quotes tab");
         Thread.sleep(1000);
         clickElement(driver.findElement(By.xpath("//div[text()='"+quoteNumber+"']/../following-sibling::td/div/span")), "Quote number");
@@ -53,19 +51,7 @@ public class BindQuote extends BasePage {
         Thread.sleep(1000);
         clickElement(requestIssueBtn, "Request Issue button");
         Thread.sleep(1000);
-        clickElement(driver.findElement(By.xpath("//div[text()='SR-22/ Certificate of Insurance Required?']/../../../..//label[text()='" + certificateOfInsurance + "']")), "Certificate Required");
-        clickElement(occupationSelect, "Occupation dropdown");
-        clickElement(driver.findElement(By.xpath("//li[text()='" + occupation + "']")), "Occupation");
-        clickElement(next, "Next");
-        Thread.sleep(1000);
-        clickElement(ownershipSelect, "Occupation dropdown");
-        clickElement(driver.findElement(By.xpath("//li[text()='" + ownership + "']")), "Ownership");
         clickElement(saveChangesBtn, "Save");
-        clickElement(rateQuoteBtn, "Rate");
-        Thread.sleep(1000);
-        clickElement(printQuoteLetterBtn, "Print Quote Letter");
-        Thread.sleep(1000);
-        clickElement(requestIssueBtn, "Request Issue");
         Thread.sleep(1000);
         clickElement(nextBtn, "Next");
         Thread.sleep(1000);
@@ -73,6 +59,7 @@ public class BindQuote extends BasePage {
         Thread.sleep(1000);
         clickElement(bindBtn, "Bind");
         Thread.sleep(1000);
-        clickElement(logoutBtn, "Logout");
+        String policyNumber= getText(By.xpath("//div[text()='Policy Number']/../../../following-sibling::div/div"), "Policy number");
+        return policyNumber;
     }
 }

@@ -12,6 +12,7 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.Reporter;
 import pages.Auto.*;
+import pages.Common.Logout;
 import pages.CommonUtility;
 import pages.Common.Login;
 import pages.Common.NewQuoteCreation;
@@ -19,6 +20,7 @@ import pages.Common.QuoteRegistration;
 import pages.Home.EndOfQuoteCreation;
 import pages.Home.LocationCoverage;
 import pages.Home.PolicyInformation;
+import pages.Transactions.Cancellation;
 import pages.Transactions.Endorsement;
 
 import java.io.IOException;
@@ -34,7 +36,10 @@ public class Steps extends BaseSteps {
     Map<String, String> vehicleData = new HashMap<>();
     Map<String, String> vehicleToAddData = new HashMap<>();
     Map<String, String> endorsementData = new HashMap<>();
+    Map<String, String> diaryData = new HashMap<>();
+    Map<String, String> cancellationData = new HashMap<>();
     String quoteNumber;
+    String policyNumber;
 
     final String BROWSER = Reporter.getCurrentTestResult().getTestContext().getCurrentXmlTest().getParameter("BROWSER");
     final String WAIT = Reporter.getCurrentTestResult().getTestContext().getCurrentXmlTest().getParameter("WAIT");
@@ -61,9 +66,9 @@ public class Steps extends BaseSteps {
     }
 
 
-
     @Given("the user opens the sandbox")
-    public void theUserOpensTheSandbox() {driver.get("https://inforcedev.oneshield.com/oneshield/");
+    public void theUserOpensTheSandbox() {
+        driver.get("https://inforcedev.oneshield.com/oneshield/");
     }
 
     @And("user enters {string} in {string}")
@@ -84,8 +89,8 @@ public class Steps extends BaseSteps {
     @Given("load data from Auto excel file {string}, {string},{string},{string}")
     public void loadDataFromAutoExcelFile(String arg0, String arg1, String arg2, String arg3) throws IOException {
         customerData = new GetExcelData().getRowData(arg0, "CustomerData", Integer.parseInt(arg2));
-        personalAutoData= new GetExcelData().getRowData(arg0, "PersonalAutoData", Integer.parseInt(arg1));
-        vehicleData = new GetExcelData().getRowData(arg0,"VehicleData", Integer.parseInt(arg3));
+        personalAutoData = new GetExcelData().getRowData(arg0, "PersonalAutoData", Integer.parseInt(arg1));
+        vehicleData = new GetExcelData().getRowData(arg0, "VehicleData", Integer.parseInt(arg3));
     }
 
     @Then("user create new customer")
@@ -114,22 +119,22 @@ public class Steps extends BaseSteps {
 
     @And("user binds quote")
     public void userBindsQuote() throws InterruptedException, IOException {
-        new BindQuote(driver).bindQuote(quoteNumber, customerData.get("SR-22/Certificate_of_Insurance_Required?"), customerData.get("Occupation"),vehicleData.get("Ownership"));
+        policyNumber = new BindQuote(driver).bindQuote(quoteNumber);
     }
 
     @And("user fill in policy information Personal Auto")
     public void userFillInPolicyInformationPersonalAuto() throws InterruptedException {
-        new Policy(driver).fillInPolicyPage(personalAutoData.get("Billing_Method"),personalAutoData.get("Eligibility_in_case_of_false_information"),personalAutoData.get("Eligibility_in_case_of_existing_damage"));
+        new Policy(driver).fillInPolicyPage(personalAutoData.get("Billing_Method"), personalAutoData.get("Eligibility_in_case_of_false_information"), personalAutoData.get("Eligibility_in_case_of_existing_damage"));
     }
 
     @And("user fill in driver page")
     public void userFillInDriverPage() throws InterruptedException {
-        new Driver(driver).fillInDriverPage(customerData.get("Gender"),customerData.get("Marital_Status"), customerData.get("License_Status"), personalAutoData.get("License_State/Province"));
+        new Driver(driver).fillInDriverPage(customerData.get("Gender"), customerData.get("Marital_Status"), customerData.get("License_Status"), personalAutoData.get("License_State/Province"), customerData.get("Occupation"), customerData.get("SR-22/Certificate_of_Insurance_Required?"));
     }
 
     @And("user fill in vehicle page")
     public void userFillInVehiclePage() throws InterruptedException {
-        new Vehicle(driver).fillInVehiclePage(vehicleData.get("Year"),vehicleData.get("Make"),vehicleData.get("Model"),vehicleData.get("Specification"),vehicleData.get("Vehicle_Use"));
+        new Vehicle(driver).fillInVehiclePage(vehicleData.get("Year"), vehicleData.get("Make"), vehicleData.get("Model"), vehicleData.get("Specification"), vehicleData.get("Vehicle_Use"), vehicleData.get("Ownership"));
     }
 
     @And("user fill in coverage page")
@@ -139,29 +144,29 @@ public class Steps extends BaseSteps {
 
     @And("user override underwriting referral")
     public void userOverrideUnderwritingReferral() {
-        new Underwriting(driver).fillInUWQuestions(personalAutoData.get("Underwriter's Comments"),personalAutoData.get("Overridden"));
+        new Underwriting(driver).fillInUWQuestions(personalAutoData.get("Underwriter's Comments"), personalAutoData.get("Overridden"));
     }
 
     @And("user fill in wind mitigation")
     public void userFillInWindMitigation() {
-        new LocationCoverage(driver).fillInLocationCoverageRegression(homeOwnersData.get("Residence Type"), homeOwnersData.get("Replacement Cost"), homeOwnersData.get("Policy Coverage Option"), homeOwnersData.get("All Perils Deductible"), homeOwnersData.get("Windstorm or Hail Deductible"), homeOwnersData.get("Liability"), homeOwnersData.get("Medical Payments"), homeOwnersData.get("Year Built"), homeOwnersData.get("Roof Type"), homeOwnersData.get("Construction Type"), homeOwnersData.get("Any losses in the last three years?"), homeOwnersData.get("# of Floors"),homeOwnersData.get("Roof Shape"),homeOwnersData.get("Secondary Water Resistance"),homeOwnersData.get("Opening Protection"),homeOwnersData.get("Roof Deck"),homeOwnersData.get("Distance to Shore"),homeOwnersData.get("Roof Deck Attachment"),homeOwnersData.get("Roof Wall Connection"));
+        new LocationCoverage(driver).fillInLocationCoverageRegression(homeOwnersData.get("Residence Type"), homeOwnersData.get("Replacement Cost"), homeOwnersData.get("Policy Coverage Option"), homeOwnersData.get("All Perils Deductible"), homeOwnersData.get("Windstorm or Hail Deductible"), homeOwnersData.get("Liability"), homeOwnersData.get("Medical Payments"), homeOwnersData.get("Year Built"), homeOwnersData.get("Roof Type"), homeOwnersData.get("Construction Type"), homeOwnersData.get("Any losses in the last three years?"), homeOwnersData.get("# of Floors"), homeOwnersData.get("Roof Shape"), homeOwnersData.get("Secondary Water Resistance"), homeOwnersData.get("Opening Protection"), homeOwnersData.get("Roof Deck"), homeOwnersData.get("Distance to Shore"), homeOwnersData.get("Roof Deck Attachment"), homeOwnersData.get("Roof Wall Connection"));
     }
 
     @And("user fill in driver page with incidents")
     public void userFillInDriverPageWithIncidents() {
-        new Driver(driver).fillInDriverPageRegression(personalAutoData.get("Gender"),personalAutoData.get("Marital Status"),personalAutoData.get("SR-22/ Certificate of Insurance Required?"), personalAutoData.get("License Status"), personalAutoData.get("Occupation"),personalAutoData.get("License Year"),personalAutoData.get("License Number"), personalAutoData.get("Incident Date"));
+        new Driver(driver).fillInDriverPageRegression(personalAutoData.get("Gender"), personalAutoData.get("Marital Status"), personalAutoData.get("SR-22/ Certificate of Insurance Required?"), personalAutoData.get("License Status"), personalAutoData.get("Occupation"), personalAutoData.get("License Year"), personalAutoData.get("License Number"), personalAutoData.get("Incident Date"));
 
     }
 
     @And("user fill in vehicle page with extra vehicle")
     public void userFillInVehiclePageWithExtraVehicle() throws InterruptedException {
-        new Vehicle(driver).fillInVehiclePageRegression(personalAutoData.get("Year"),personalAutoData.get("Make"),personalAutoData.get("Model"),personalAutoData.get("Specification"),personalAutoData.get("Vehicle Use"), personalAutoData.get("Original Cost"), personalAutoData.get("Stated Amount"), personalAutoData.get("Make2"), personalAutoData.get("Model2"), personalAutoData.get("Specification2"), personalAutoData.get("Vehicle Use2"), personalAutoData.get("Vehicle Type"), personalAutoData.get("Ownership"), personalAutoData.get("Ownership2"));
+        new Vehicle(driver).fillInVehiclePageRegression(personalAutoData.get("Year"), personalAutoData.get("Make"), personalAutoData.get("Model"), personalAutoData.get("Specification"), personalAutoData.get("Vehicle Use"), personalAutoData.get("Original Cost"), personalAutoData.get("Stated Amount"), personalAutoData.get("Make2"), personalAutoData.get("Model2"), personalAutoData.get("Specification2"), personalAutoData.get("Vehicle Use2"), personalAutoData.get("Vehicle Type"), personalAutoData.get("Ownership"), personalAutoData.get("Ownership2"));
     }
 
 
     @When("verify that the appropriate referral is displayed")
     public void verifyThatTheAppropriateReferralIsDisplayed() {
-        if(homePageData.get("Program").equals("Homeowner"))
+        if (homePageData.get("Program").equals("Homeowner"))
             Assert.assertEquals(driver.findElement(By.xpath("//div[text()='Roof Wall Connection Type is Toe Nails and NOT located in zones 15,16,17,18,19']")).getText(), "Roof Wall Connection Type is Toe Nails and NOT located in zones 15,16,17,18,19");
         else
             Assert.assertEquals(driver.findElement(By.xpath("//div[text()='Roof Wall Connection Type is Toe Nails and NOT located in zones 15,16,17,18,19']")).getText(), "Roof Wall Connection Type is Toe Nails and NOT located in zones 15,16,17,18,19");
@@ -195,15 +200,17 @@ public class Steps extends BaseSteps {
 
     @When("user create an Endorsement {string},{string}")
     public void userCreateAnEndorsement(String arg0, String arg1) throws IOException {
-        endorsementData = new GetExcelData().getRowData(arg0,"EndorsementData", Integer.parseInt(arg1));
-        new Endorsement(driver).startEndorsement(endorsementData.get("Type"), endorsementData.get("Sub_Type"), endorsementData.get("Reason"),endorsementData.get("Effective_Date"),endorsementData.get("Description"));
+        endorsementData = new GetExcelData().getRowData(arg0, "EndorsementData", Integer.parseInt(arg1));
+        new Endorsement(driver).startEndorsement(endorsementData.get("Type"), endorsementData.get("Sub_Type"), endorsementData.get("Reason"), endorsementData.get("Effective_Date"), endorsementData.get("Description"));
     }
+
     @And("user add vehicle on Endorsement {string}, {string}")
     public void userAddVehicleOnEndorsement(String arg0, String arg1) throws IOException {
-        vehicleToAddData = new GetExcelData().getRowData(arg0,"VehicleData", Integer.parseInt(arg1));
-        new Endorsement(driver).bodyOfTheEndorsement(vehicleToAddData.get("Year"),vehicleToAddData.get("Make"),vehicleToAddData.get("Model"),vehicleToAddData.get("Specification"),vehicleToAddData.get("Vehicle_Use"),vehicleToAddData.get("Ownership"));
+        vehicleToAddData = new GetExcelData().getRowData(arg0, "VehicleData", Integer.parseInt(arg1));
+        new Endorsement(driver).bodyOfTheEndorsement(vehicleToAddData.get("Year"), vehicleToAddData.get("Make"), vehicleToAddData.get("Model"), vehicleToAddData.get("Specification"), vehicleToAddData.get("Vehicle_Use"), vehicleToAddData.get("Ownership"));
     }
-    @Then("user process and Endorsement")
+
+    @Then("user process an Endorsement")
     public void userProcessAndEndorsement() {
         new Endorsement(driver).endEndorsement();
     }
@@ -212,4 +219,27 @@ public class Steps extends BaseSteps {
     public void userLogsInAsAgencyProducer() {
         new Login(driver).loginAsAgencyProducer();
     }
+
+    @Then("user logs out from the application")
+    public void userLogsOutFromTheApplication() throws InterruptedException {
+        new Logout(driver).logout();
+    }
+
+    @And("user create diary {string},{string}")
+    public void userCreateDiary(String arg0, String arg1) throws IOException, InterruptedException {
+        diaryData = new GetExcelData().getRowData(arg0, "DiaryData", Integer.parseInt(arg1));
+        new Diary(driver).createDiary(policyNumber, diaryData.get("Category"), diaryData.get("Sub_Category"), diaryData.get("Email"), diaryData.get("Subject"), diaryData.get("Description"));
+    }
+    @And("user start cancellation {string},{string}")
+    public void userStartCancellation(String arg0, String arg1) throws IOException {
+        cancellationData =new GetExcelData().getRowData(arg0, "CancellationData", Integer.parseInt(arg1));
+        new Cancellation(driver).startCancellation(cancellationData.get("Type"),cancellationData.get("Effective_Date"),cancellationData.get("Description"));
+    }
+
+    @And("user process cancellation")
+    public void userProcessCancellation() {
+        new Cancellation(driver).processCancellation(cancellationData.get("Reason"), cancellationData.get("Method"));
+    }
+
+
 }

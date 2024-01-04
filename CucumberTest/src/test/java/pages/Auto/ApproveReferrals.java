@@ -65,6 +65,5 @@ public class ApproveReferrals extends BasePage {
         Thread.sleep(1000);
         clickElement(homeTab, "Home tab");
         Thread.sleep(1000);
-        clickElement(logoutBtn, "Logout");
     }
 }

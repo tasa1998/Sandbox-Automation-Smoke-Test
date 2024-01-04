@@ -18,20 +18,29 @@ Feature: Creation and issuance of Personal Auto policies
     And user fill in vehicle page
     And user fill in coverage page
     When user refer to UW
+    Then user logs out from the application
 
-    Then user logs in as Senior UW
+    And user logs in as Senior UW
     And user search for quote
-    And user approve referrals
+    When user approve referrals
+    Then user logs out from the application
 
     And  user logs in as Agency Producer
     And user search for quote
-    And user binds quote
+    When user binds quote
+    Then user logs out from the application
+
+    And user logs in as Senior UW
+    And user create diary "<File Name>","<Diary Num>"
 
     When user create an Endorsement "<File Name>","<Endorsement Data Num>"
     And user add vehicle on Endorsement "<File Name>", "<Vehicle To Add Row Num>"
-    Then user process and Endorsement
+    Then user process an Endorsement
+
+    And user start cancellation "<File Name>","<Cancellation Data Num>"
+    And user process cancellation
 
 
     Examples:
-      | File Name                  | Row Num Personal Auto | Row Num Customer | Row Num Vehicle | Vehicle To Add Row Num |Endorsement Data Num|
-      | src/TestData/TestData.xlsx | 0                     | 0                | 0               | 1                      |0                   |
+      | File Name                  | Row Num Personal Auto | Row Num Customer | Row Num Vehicle | Vehicle To Add Row Num | Endorsement Data Num | Diary Num |
+      | src/TestData/TestData.xlsx | 0                     | 0                | 0               | 1                      | 0                    | 0         |

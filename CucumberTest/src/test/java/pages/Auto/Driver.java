@@ -96,12 +96,14 @@ public class Driver extends BasePage {
         clickElement(nextBtn, "next");
     }
 
-    public void fillInDriverPage(String gender, String maritalStatus, String licenseStatus, String licenceStateProvince) throws InterruptedException {
+    public void fillInDriverPage(String gender, String maritalStatus, String licenseStatus, String licenceStateProvince, String occupation, String certificate) throws InterruptedException {
         selectGender(gender);
         selectMaritalStatus(maritalStatus);
         selectLicenseStatus(licenseStatus);
         Thread.sleep(2000);
         selectLicenseStateProvince(licenceStateProvince);
+        selectOccupation(occupation);
+        fillInCertificateCheckbox(certificate);
         clickNextBtn();
     }
 

@@ -10,6 +10,8 @@ import pages.BasePage;
 public class Diary extends BasePage {
     WebDriver driver;
 
+    @FindBy(xpath = "//span[text()='policies']")
+    WebElement policiesTab;
     @FindBy(xpath = "//span[text()='diary']")
     WebElement diaryTab;
 
@@ -43,9 +45,15 @@ public class Diary extends BasePage {
         PageFactory.initElements(driver, this);
     }
 
-    public void createDiary(String category, String subCategory, String email, String subject, String description){
+    public void createDiary(String policyNumber, String category, String subCategory, String email, String subject, String description) throws InterruptedException {
+        clickElement(policiesTab, "Policies tab");
+        Thread.sleep(1000);
+        clickElement(driver.findElement(By.xpath("//span[contains(text(),'"+policyNumber+"')]")), "Policy number");
+        Thread.sleep(1000);
         clickElement(diaryTab, "Diary tab");
+        Thread.sleep(1000);
         clickElement(newEntryBtn,"New entry");
+        Thread.sleep(1000);
         clickElement(taskTypeRadio, "Task type");
         clickElement(categorySelect, "Category dropdown");
         clickElement(driver.findElement(By.xpath("//li[text()='" + category + "']")), "Category");
