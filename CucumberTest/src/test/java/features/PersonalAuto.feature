@@ -40,7 +40,18 @@ Feature: Creation and issuance of Personal Auto policies
     And user start cancellation "<File Name>","<Cancellation Data Num>"
     And user process cancellation
 
+    And user start reinstatement "<File Name>","<Reinstatement Data Num>"
+    And user process reinstatement
+
+    When user create an OOS Endorsement "<File Name>","<OOS Endorsement Data Num>"
+    And user add driver on OOS Endorsement "<File Name>", "<Driver To Add Row Num>"
+    Then user process an OOS Endorsement
+
+    And user roll forward rolled back transaction
+
+    And user start renewal
+    And user process renewal
 
     Examples:
-      | File Name                  | Row Num Personal Auto | Row Num Customer | Row Num Vehicle | Vehicle To Add Row Num | Endorsement Data Num | Diary Num | Cancellation Data Num |
-      | src/TestData/TestData.xlsx | 0                     | 0                | 0               | 1                      | 0                    | 0         | 0                     |
+      | File Name                  | Row Num Personal Auto | Row Num Customer | Row Num Vehicle | Vehicle To Add Row Num | Endorsement Data Num | Diary Num | Cancellation Data Num | Reinstatement Data Num | OOS Endorsement Data Num | Driver To Add Row Num
+      | src/TestData/TestData.xlsx | 0                     | 0                | 0               | 1                      | 0                    | 0         | 0                     | 0                      | 1                        | 1                     |

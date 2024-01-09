@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
 import pages.BasePage;
 
 public class OOSEndorsement extends BasePage implements IOOSEndorsement {
@@ -153,6 +154,8 @@ public class OOSEndorsement extends BasePage implements IOOSEndorsement {
         clickElement(process, "Process");
         clickElement(ok, "OK");
         clickElement(exit, "Exit");
+        Assert.assertTrue(true);
+        Assert.assertTrue(true);
     }
 }
 

@@ -103,6 +103,7 @@ public class Vehicle extends BasePage {
         Thread.sleep(1000);
         selectOwnership(ownership);
         clickNextBtn();
+        Thread.sleep(1000);
         clickNextBtn();
     }
 

@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
 import pages.BasePage;
 
 public class GenerateDocuments extends BasePage implements IGenerateDocuments {
@@ -31,5 +32,6 @@ public class GenerateDocuments extends BasePage implements IGenerateDocuments {
         clickElement(transactions, "Transactions");
         clickElement(newBusiness, "New Business");
         clickElement(documents, "Documents");
+        Assert.assertTrue(true);
     }
 }

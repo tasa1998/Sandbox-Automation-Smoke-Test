@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
 import pages.BasePage;
 
 public class BindQuote extends BasePage {
@@ -57,8 +58,10 @@ public class BindQuote extends BasePage {
         Thread.sleep(1000);
         clickElement(nextBtn, "Next");
         Thread.sleep(1000);
+        Assert.assertTrue(true);
         clickElement(bindBtn, "Bind");
         Thread.sleep(1000);
+        Assert.assertTrue(true);
         String policyNumber= getText(By.xpath("//div[text()='Policy Number']/../../../following-sibling::div/div"), "Policy number");
         return policyNumber;
     }

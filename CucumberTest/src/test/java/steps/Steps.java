@@ -20,8 +20,7 @@ import pages.Common.QuoteRegistration;
 import pages.Home.EndOfQuoteCreation;
 import pages.Home.LocationCoverage;
 import pages.Home.PolicyInformation;
-import pages.Transactions.Cancellation;
-import pages.Transactions.Endorsement;
+import pages.Transactions.*;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -38,6 +37,7 @@ public class Steps extends BaseSteps {
     Map<String, String> endorsementData = new HashMap<>();
     Map<String, String> diaryData = new HashMap<>();
     Map<String, String> cancellationData = new HashMap<>();
+    Map<String, String> reinstatementData = new HashMap<>();
     String quoteNumber;
     String policyNumber;
 
@@ -230,10 +230,11 @@ public class Steps extends BaseSteps {
         diaryData = new GetExcelData().getRowData(arg0, "DiaryData", Integer.parseInt(arg1));
         new Diary(driver).createDiary(policyNumber, diaryData.get("Category"), diaryData.get("Sub_Category"), diaryData.get("Email"), diaryData.get("Subject"), diaryData.get("Description"));
     }
+
     @And("user start cancellation {string},{string}")
     public void userStartCancellation(String arg0, String arg1) throws IOException {
-        cancellationData =new GetExcelData().getRowData(arg0, "CancellationData", Integer.parseInt(arg1));
-        new Cancellation(driver).startCancellation(cancellationData.get("Type"),cancellationData.get("Effective_Date"),cancellationData.get("Description"));
+        cancellationData = new GetExcelData().getRowData(arg0, "CancellationData", Integer.parseInt(arg1));
+        new Cancellation(driver).startCancellation(cancellationData.get("Type"), cancellationData.get("Effective_Date"), cancellationData.get("Description"));
     }
 
     @And("user process cancellation")
@@ -242,4 +243,48 @@ public class Steps extends BaseSteps {
     }
 
 
+    @And("user start reinstatement {string},{string}")
+    public void userStartReinstatement(String arg0, String arg1) throws IOException {
+        reinstatementData = new GetExcelData().getRowData(arg0, "ReinstatementData", Integer.parseInt(arg1));
+        new Reinstatement(driver).startReinstatement(reinstatementData.get("Type"), reinstatementData.get("Effective_Date"), reinstatementData.get("Description"));
+    }
+
+    @And("user process reinstatement")
+    public void userProcessReinstatement() {
+        new Reinstatement(driver).processReinstatement(reinstatementData.get("Claims"), reinstatementData.get("Reason"));
+    }
+
+
+    @When("user create an OOS Endorsement {string},{string}")
+    public void userCreateAnOOSEndorsement(String arg0, String arg1) throws IOException {
+        endorsementData = new GetExcelData().getRowData(arg0, "EndorsementData", Integer.parseInt(arg1));
+        new OOSEndorsement(driver).startOOSEndorsement(endorsementData.get(""),endorsementData.get(""),endorsementData.get(""),endorsementData.get(""));
+
+    }
+    @And("user add driver on OOS Endorsement {string}, {string}")
+    public void userAddDriverOnOOSEndorsement(String arg0, String arg1) throws IOException {
+        customerData = new GetExcelData().getRowData(arg0, "CustomerData", Integer.parseInt(arg1));
+        new OOSEndorsement(driver).bodyOfTheOOSEndorsement(customerData.get("First_Name"),customerData.get("Last_Name"),customerData.get("DoB"),customerData.get("Gender"), customerData.get("Marital_Status"), customerData.get("SR-22/Certificate_of_Insurance_Required?"), customerData.get("Occupation"), customerData.get("License_Status"), customerData.get("Driver_Type"));
+    }
+
+    @Then("user process an OOS Endorsement")
+    public void userProcessAnOOSEndorsement() {
+        new OOSEndorsement(driver).endOOSEndorsement();
+    }
+
+
+    @And("user roll forward rolled back transaction")
+    public void userRollForwardRolledBackTransaction() throws InterruptedException {
+        new RollforwardTransactions(driver).rollfwd();
+    }
+
+    @And("user start renewal")
+    public void userStartRenewal() {
+        new Renewal(driver).startRenewal();
+    }
+
+    @And("user process renewal")
+    public void userProcessRenewal() {
+        new Renewal(driver).processRenewal();
+    }
 }

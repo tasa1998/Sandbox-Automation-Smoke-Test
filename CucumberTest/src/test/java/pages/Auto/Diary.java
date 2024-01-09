@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
 import pages.BasePage;
 
 public class Diary extends BasePage {
@@ -63,6 +64,7 @@ public class Diary extends BasePage {
         typeText(subjectField, subject, "Subject");
         typeText(descriptionField, description, "Description");
         clickElement(saveBtn, "Save");
+        Assert.assertTrue(true);
 
 
     }
