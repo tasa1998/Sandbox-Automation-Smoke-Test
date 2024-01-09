@@ -53,5 +53,5 @@ Feature: Creation and issuance of Personal Auto policies
     And user process renewal
 
     Examples:
-      | File Name                  | Row Num Personal Auto | Row Num Customer | Row Num Vehicle | Vehicle To Add Row Num | Endorsement Data Num | Diary Num | Cancellation Data Num | Reinstatement Data Num | OOS Endorsement Data Num | Driver To Add Row Num
+      | File Name                  | Row Num Personal Auto | Row Num Customer | Row Num Vehicle | Vehicle To Add Row Num | Endorsement Data Num | Diary Num | Cancellation Data Num | Reinstatement Data Num | OOS Endorsement Data Num | Driver To Add Row Num |
       | src/TestData/TestData.xlsx | 0                     | 0                | 0               | 1                      | 0                    | 0         | 0                     | 0                      | 1                        | 1                     |
