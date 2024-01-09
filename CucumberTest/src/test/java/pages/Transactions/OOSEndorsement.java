@@ -154,8 +154,8 @@ public class OOSEndorsement extends BasePage implements IOOSEndorsement {
         clickElement(process, "Process");
         clickElement(ok, "OK");
         clickElement(exit, "Exit");
-        Assert.assertTrue(true);
-        Assert.assertTrue(true);
+        Assert.assertEquals(getText(By.xpath("//div[contains(text(),'Add Driver')]/../preceding-sibling::td[2]/div"),"Endorsement"),"Endorsement");
+        Assert.assertEquals(getText(By.xpath("//div[contains(text(),'Add Driver')]/../following-sibling::td[8]/div"),"Endorsement Processed"),"Processed");
     }
 }
 

@@ -2,6 +2,7 @@ package pages.Transactions;
 
 
 import Interfaces.IRenewal;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -56,7 +57,7 @@ WebDriver driver;
         clickElement(newTransaction, "Transactions");
         clickElement(createRenewal, "CreateRenewal");
         clickElement(ok, "Ok");
-        Assert.assertTrue(true);
+        Assert.assertEquals(getText(By.xpath("//span[contains(text(),'Renewal')]/../../following-sibling::td[10]/div"),"Renewal Created"),"Created");
         clickElement(hyperLink, "Renewal");
         clickElement(policyImage, "PolicyImage");
         clickElement(changeSummaryBtn, "ChangeSummary");
@@ -70,6 +71,7 @@ WebDriver driver;
         clickElement(processBtn, "Process");
         clickElement(ok, "Ok");
         clickElement(exitBtn, "Exit");
-        Assert.assertTrue(true);
+        clickElement(newTransaction, "Transactions");
+        Assert.assertEquals(getText(By.xpath("//span[contains(text(),'Renewal')]/../../following-sibling::td[10]/div"),"Renewal Processed"),"Processed");
     }
 }

@@ -1,5 +1,6 @@
 package pages.Transactions;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -21,9 +22,9 @@ public class RollforwardTransactions extends BasePage {
     public void rollfwd() throws InterruptedException {
         clickElement(rollFwdBtn, "Roll fwd btn");
         Thread.sleep(1000);
-        Assert.assertTrue(true);
+        Assert.assertEquals(getText(By.xpath("//div[contains(text(),'Cancellation')]/../following-sibling::td[8]/div"),"Cancellation Processed"),"Processed");
         clickElement(rollFwdBtn, "Roll fwd btn");
         Thread.sleep(1000);
-        Assert.assertTrue(true);
+        Assert.assertEquals(getText(By.xpath("//span[contains(text(),'Reinstatement')]/../../following-sibling::td[10]/div"),"Reinstatement Processed"),"Processed");
     }
 }
