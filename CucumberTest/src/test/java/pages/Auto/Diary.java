@@ -64,7 +64,7 @@ public class Diary extends BasePage {
         typeText(subjectField, subject, "Subject");
         typeText(descriptionField, description, "Description");
         clickElement(saveBtn, "Save");
-        Assert.assertTrue(true);
+        Assert.assertEquals(getText(By.xpath("//div[contains(text(), 'Policy')]/../../td[1]"),"Mini Diary"),subject);
 
 
     }

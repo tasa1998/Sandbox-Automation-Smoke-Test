@@ -132,7 +132,7 @@ public class Endorsement extends BasePage implements IEndorsement {
         clickElement(process, "Process");
         clickElement(ok, "OK");
         clickElement(exit, "Exit");
-        Assert.assertTrue(true);
-        Assert.assertTrue(true);
+        Assert.assertEquals(getText(By.xpath("//div/span[contains(text(),'Endorsement')]"),"Endorsement"),"Endorsement");
+        Assert.assertEquals(getText(By.xpath("//span[contains(text(), 'Endorsement')]/../../following-sibling::td[10]"),"Endorsement Processed"),"Processed");
     }
 }

@@ -2,6 +2,7 @@ package pages.Transactions;
 
 
 import Interfaces.ICancellation;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -69,7 +70,7 @@ public class Cancellation extends BasePage implements ICancellation {
         clickElement(process, "Process");
         clickElement(ok, "OK");
         clickElement(exit, "Exit");
-        Assert.assertTrue(true);
-        Assert.assertTrue(true);
+        Assert.assertEquals(getText(By.xpath("//span[contains(text(),'Cancellation - Insured')]"),"Cancellation - Insured"),"Cancellation - Insured");
+        Assert.assertEquals(getText(By.xpath("//span[contains(text(), 'Cancel')]/../../following-sibling::td[10]"),"Cancellation"),"Processed");
     }
 }

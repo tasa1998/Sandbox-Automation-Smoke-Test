@@ -35,6 +35,8 @@ public class BindQuote extends BasePage {
     WebElement next;
     @FindBy(xpath = "//span[text()='>>> bind']")
     WebElement bindBtn;
+    @FindBy(xpath = "//div[contains(text(),'PA')]")
+    WebElement policyNum;
     public BindQuote(WebDriver driver) {
         super(driver);
         this.driver = driver;
@@ -58,10 +60,10 @@ public class BindQuote extends BasePage {
         Thread.sleep(1000);
         clickElement(nextBtn, "Next");
         Thread.sleep(1000);
-        Assert.assertTrue(true);
+        Assert.assertEquals(getText(By.xpath("//div[text()='4.00']"),"Payments Schedule"),"4.00");
         clickElement(bindBtn, "Bind");
         Thread.sleep(1000);
-        Assert.assertTrue(true);
+        Assert.assertTrue(policyNum.isDisplayed());
         String policyNumber= getText(By.xpath("//div[text()='Policy Number']/../../../following-sibling::div/div"), "Policy number");
         return policyNumber;
     }

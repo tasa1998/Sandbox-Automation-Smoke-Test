@@ -2,6 +2,7 @@ package pages.Transactions;
 
 
 import Interfaces.IReinstatement;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -70,7 +71,7 @@ public class Reinstatement extends BasePage implements IReinstatement {
         clickElement(process, "Process");
         clickElement(ok, "OK");
         clickElement(exit, "Exit");
-        Assert.assertTrue(true);
-        Assert.assertTrue(true);
+        Assert.assertEquals(getText(By.xpath("//div/span[contains(text(),'Reinstatement')]"),"Reinstatement"),"Reinstatement");
+        Assert.assertEquals(getText(By.xpath("//span[contains(text(), 'Reinstatement')]/../../following-sibling::td[10]"),"Reinstatement"),"Processed");
     }
 }

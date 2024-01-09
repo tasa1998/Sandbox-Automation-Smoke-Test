@@ -20,6 +20,9 @@ public class GenerateDocuments extends BasePage implements IGenerateDocuments {
     @FindBy(xpath = "//span[text()='documents']")
     WebElement documents;
 
+    @FindBy(xpath = "//div[text()='Completed']")
+    WebElement generateDoc;
+
 
     public GenerateDocuments(WebDriver driver) {
         super(driver);
@@ -28,10 +31,10 @@ public class GenerateDocuments extends BasePage implements IGenerateDocuments {
     }
 
     @Override
-    public void GenerateDocuments() {
+    public void generateDocuments() {
         clickElement(transactions, "Transactions");
         clickElement(newBusiness, "New Business");
         clickElement(documents, "Documents");
-        Assert.assertTrue(true);
+        Assert.assertTrue(generateDoc.isDisplayed());
     }
 }
